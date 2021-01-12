@@ -11,7 +11,7 @@ import java.util.List;
  * }
  */
 class Solution {
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode s1 = l1;
         ListNode s2 = l2;
         int sum = 0;
