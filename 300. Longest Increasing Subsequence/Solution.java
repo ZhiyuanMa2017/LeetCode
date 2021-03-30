@@ -6,13 +6,16 @@ class Solution {
             int i = 0, j = size;
             while (i != j) {
                 int m = (i + j) / 2;
-                if (tails[m] < x)
+                if (tails[m] < x) {
                     i = m + 1;
-                else
+                } else {
                     j = m;
+                }
             }
             tails[i] = x;
-            if (i == size) ++size;
+            if (i == size) {
+                ++size;
+            }
         }
         return size;
     }
