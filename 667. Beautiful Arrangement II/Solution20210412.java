@@ -1,5 +1,5 @@
-class Solution {
-    public static int[] constructArray(int n, int k) {
+public class Solution20210412 {
+    public int[] constructArray(int n, int k) {
         int l = 1;
         int h = n;
         int[] res = new int[n];
@@ -8,18 +8,18 @@ class Solution {
             if (k > 1) {
                 if (k % 2 != 0) {
                     res[index] = l;
-                    l++;
                     index++;
+                    l++;
                 } else {
                     res[index] = h;
-                    h--;
                     index++;
+                    h--;
                 }
                 k--;
             } else {
                 res[index] = l;
-                l++;
                 index++;
+                l++;
             }
         }
         return res;
