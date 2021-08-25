@@ -3,7 +3,7 @@ class Solution {
         int l = 0;
         int r = (int) Math.sqrt(c);
         int sum;
-        while (l<=r) {
+        while (l <= r) {
             sum = l * l + r * r;
             if (sum == c) {
                 return true;
