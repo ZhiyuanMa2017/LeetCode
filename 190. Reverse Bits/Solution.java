@@ -19,6 +19,5 @@ public class Solution {
         System.out.println(Integer.toBinaryString(-1 << 32));
         System.out.println(-1 << 31 << 1);
         System.out.println(Integer.toBinaryString(-1 << 31 << 1));
-
     }
 }
