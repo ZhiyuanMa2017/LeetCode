@@ -10,7 +10,7 @@ class Solution {
                 ss.add('}');
             } else if (c == '[') {
                 ss.add(']');
-            } else if (ss.isEmpty() || ss.pop() != c){
+            } else if (ss.isEmpty() || ss.pop() != c) {
                 return false;
             }
         }
