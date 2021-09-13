@@ -4,8 +4,21 @@ import java.util.List;
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<>();
-        helper(root, res);
+        Stack<TreeNode> s = new Stack<>();
+        TreeNode tmp = root;
+        while (tmp != null || !s.isEmpty()) {
+            while (tmp != null) {
+                s.push(tmp);
+                tmp = tmp.left;
+            }
+            tmp = s.pop();
+            res.add(tmp.val);
+            tmp = tmp.right;
+        }
         return res;
+//        List<Integer> res = new ArrayList<>();
+//        helper(root, res);
+//        return res;
     }
 
     private void helper(TreeNode node, List<Integer> list) {
