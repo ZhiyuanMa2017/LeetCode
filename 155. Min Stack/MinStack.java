@@ -20,9 +20,9 @@ class MinStack {
         if (head == null) {
             head = new Node(val, val, null);
         } else {
-            int tmp = Math.min(val, head.min);
-            Node temp = new Node(val, tmp, head);
-            head = temp;
+            int curMin = Math.min(val, head.min);
+            Node newNode = new Node(val, curMin, head);
+            head = newNode;
         }
     }
 
