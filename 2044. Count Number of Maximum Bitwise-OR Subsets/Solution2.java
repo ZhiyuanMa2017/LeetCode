@@ -1,0 +1,15 @@
+class Solution2 {
+    public static int countMaxOrSubsets(int[] A) {
+        int max = 0;
+        int[] dp = new int[1 << 17];
+        // dp[sum] means the number of subsets with bitwise-or sum.
+        dp[0] = 1;
+        for (int a : A) {
+            for (int i = max; i >= 0; --i) {
+                dp[i | a] += dp[i];
+            }
+            max |= a;
+        }
+        return dp[max];
+    }
+}
