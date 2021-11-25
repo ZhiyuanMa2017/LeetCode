@@ -1,4 +1,4 @@
-# class Solution(object):
+# class Solution20211124(object):
 #     def lengthOfLongestSubstring(self, s):
 #         """
 #         :type s: str
@@ -18,7 +18,7 @@
 #                 substring = substring[index + 1:] + s[i]
 #         return length
 
-class Solution(object):
+class Solution20211124(object):
     def lengthOfLongestSubstring(self, s):
         """
         :type s: str

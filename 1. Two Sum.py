@@ -1,4 +1,4 @@
-# class Solution(object):
+# class Solution20211124(object):
 #     def twoSum(self, nums, target):
 #         """
 #         :type nums: List[int]
@@ -10,7 +10,7 @@
 #                     if nums[j] + nums[i] == target:
 #                         return [i, j]
 
-class Solution(object):
+class Solution20211124(object):
     def twoSum(self, nums, target):
         """
         :type nums: List[int]

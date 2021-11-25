@@ -1,4 +1,4 @@
-class Solution(object):
+class Solution20211124(object):
     def reverse(self, x):
         """
         :type x: int
