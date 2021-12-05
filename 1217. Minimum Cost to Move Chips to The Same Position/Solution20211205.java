@@ -1,12 +1,12 @@
-class Solution {
+class Solution20211205 {
     public int minCostToMoveChips(int[] position) {
         int odd = 0;
         int even = 0;
         for (int i = 0; i < position.length; i++) {
             if (position[i] % 2 == 0) {
-                even += 1;
+                even++;
             } else {
-                odd += 1;
+                odd++;
             }
         }
         return Math.min(odd, even);
