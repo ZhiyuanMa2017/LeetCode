@@ -1,18 +1,3 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
     public int findTilt(TreeNode root) {
         return findhelper(root)[0];
@@ -32,23 +17,23 @@ class Solution {
             return new int[]{tilt, sum};
         }
     }
-}
 
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
+    class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
 
-    TreeNode() {
-    }
+        TreeNode() {
+        }
 
-    TreeNode(int val) {
-        this.val = val;
-    }
+        TreeNode(int val) {
+            this.val = val;
+        }
 
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
     }
 }
