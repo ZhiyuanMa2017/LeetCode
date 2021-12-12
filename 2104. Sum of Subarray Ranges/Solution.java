@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-class Solution2 {
+class Solution {
     public long subArrayRanges(int[] A) {
         int n = A.length, j, k;
         long res = 0;
