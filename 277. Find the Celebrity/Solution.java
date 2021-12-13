@@ -9,11 +9,16 @@ public class Solution extends Relation {
                 celebrity = i;
             }
         }
+        for (int i = 0; i < celebrity; i++) {
+            if (knows(celebrity, i)) {
+                return -1;
+            }
+        }
         for (int i = 0; i < n; i++) {
             if (i == celebrity) {
                 continue;
             }
-            if (!knows(i, celebrity) || knows(celebrity, i)) {
+            if (!knows(i, celebrity)) {
                 return -1;
             }
         }
