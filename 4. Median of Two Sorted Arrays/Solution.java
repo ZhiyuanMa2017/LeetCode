@@ -5,8 +5,8 @@ class Solution {
         if (length1 < length2) {
             return findMedianSortedArrays(nums2, nums1);
         }
-        // # 1 # 3 # 5 # 7 # length = 4 total = 4 * 2 + 1 = 9
-        // # 1 # 3 # 5 #     length = 3 total = 3 * 2 + 1 = 7
+        // # 1 # 3 # 5 # 7 # length1 = 4 total = 4 * 2 + 1 = 9
+        // # 1 # 3 # 5 #     length2 = 3 total = 3 * 2 + 1 = 7
         // "#" means cut place
         // mid2 = 3 --> mid1 = 4 + 3 - 3 = 4
         // since mid1 + mid2 = (total1 + total2 - 2)/2 = length1 + length2
