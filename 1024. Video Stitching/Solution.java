@@ -20,6 +20,9 @@ class Solution {
                     return res + 1;
                 }
             }
+            if (curEnd == curFarthest) {
+                return -1;
+            }
             res++;
             curEnd = curFarthest;
         }
