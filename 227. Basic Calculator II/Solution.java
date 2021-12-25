@@ -13,7 +13,7 @@ class Solution {
             if (Character.isDigit(currchar)) {
                 currnum = currnum * 10 + (currchar - '0');
             }
-            if (!Character.isDigit(currchar) && !Character.isWhitespace(currchar)|| i == len - 1) {
+            if (!Character.isDigit(currchar) && !Character.isWhitespace(currchar) || i == len - 1) {
                 if (op == '+') {
                     res += prevnum;
                     prevnum = currnum;
