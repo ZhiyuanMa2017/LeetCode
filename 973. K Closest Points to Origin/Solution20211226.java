@@ -16,15 +16,14 @@ class Solution20211226 {
         int pivotVal = points[pivotIndex][0] * points[pivotIndex][0]
                 + points[pivotIndex][1] * points[pivotIndex][1];
         swap(points, r, pivotIndex);
-        int index = l - 1;
+        int index = l;
         for (int i = l; i < r; i++) {
             int dis = points[i][0] * points[i][0] + points[i][1] * points[i][1];
             if (dis <= pivotVal) {
-                index++;
                 swap(points, index, i);
+                index++;
             }
         }
-        index++;
         swap(points, r, index);
         if (index - l + 1 > k) {
             quickSelect(points, l, index - 1, k);
