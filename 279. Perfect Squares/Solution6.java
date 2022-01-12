@@ -1,4 +1,4 @@
-class Solution {
+class Solution6 {
     public int numSquares(int n) {
         while (n % 4 == 0) {
             n /= 4;
