@@ -4,7 +4,7 @@ class Solution {
         int[] dp2 = new int[prices.length];
         int[] dp3 = new int[prices.length];
 
-        dp1[0] = -prices[0];// has stock
+        dp1[0] = -prices[0]; // has stock
         dp2[0] = 0; // do not have stock, sell them today
         dp3[0] = 0; // do not have stock, sell them before today
         for (int i = 1; i < prices.length; i++) {
