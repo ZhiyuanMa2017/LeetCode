@@ -14,7 +14,7 @@ class Solution {
         }
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                mat[i][j] = map.get(i-j).poll();
+                mat[i][j] = map.get(i - j).poll();
             }
         }
         return mat;
