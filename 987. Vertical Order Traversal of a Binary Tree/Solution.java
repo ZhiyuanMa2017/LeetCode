@@ -4,21 +4,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Arrays;
 
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- * int val;
- * TreeNode left;
- * TreeNode right;
- * TreeNode() {}
- * TreeNode(int val) { this.val = val; }
- * TreeNode(int val, TreeNode left, TreeNode right) {
- * this.val = val;
- * this.left = left;
- * this.right = right;
- * }
- * }
- */
+
 class Solution {
     public static List<List<Integer>> verticalTraversal(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
@@ -70,35 +56,17 @@ class Solution {
         List<List<Integer>> res = verticalTraversal(a);
         System.out.println(Arrays.toString(res.toArray()));
     }
-}
 
-class NodePosition {
-    int x;
-    int y;
-    int val;
+    class NodePosition {
+        int x;
+        int y;
+        int val;
 
-    NodePosition(int x, int y, int val) {
-        this.x = x;
-        this.y = y;
-        this.val = val;
-    }
-}
-
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode() {
+        NodePosition(int x, int y, int val) {
+            this.x = x;
+            this.y = y;
+            this.val = val;
+        }
     }
 
-    TreeNode(int val) {
-        this.val = val;
-    }
-
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
-    }
 }
