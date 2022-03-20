@@ -10,10 +10,9 @@ class Solution {
         for (int i = 0; i < numCourses; i++) {
             graph.add(new ArrayList<>());
         }
-        // pres 0 -> 1
-        for (int[] pres : prerequisites) {
-            inDegree[pres[1]]++;
-            graph.get(pres[0]).add(pres[1]);
+        for (int[] pre : prerequisites) {
+            inDegree[pre[0]]++;
+            graph.get(pre[1]).add(pre[0]);
         }
         Queue<Integer> q = new LinkedList<>();
         for (int i = 0; i < numCourses; i++) {
@@ -21,17 +20,17 @@ class Solution {
                 q.offer(i);
             }
         }
-        int count = numCourses;
+        int count = 0;
         while (!q.isEmpty()) {
-            int second = q.poll();
-            count--;
-            for (int first : graph.get(second)) {
-                inDegree[first]--;
-                if (inDegree[first] == 0) {
-                    q.offer(first);
+            int b = q.poll();
+            count++;
+            for (int a : graph.get(b)) {
+                inDegree[a]--;
+                if (inDegree[a] == 0) {
+                    q.offer(a);
                 }
             }
         }
-        return count == 0;
+        return count == numCourses;
     }
 }
