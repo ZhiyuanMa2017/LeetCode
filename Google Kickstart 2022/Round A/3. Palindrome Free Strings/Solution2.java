@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Solution {
+public class Solution2 {
     // https://codingcompetitions.withgoogle.com/kickstart/submissions/00000000008cb33e/000000000054f3c8
     static Scanner sc = new Scanner(System.in);
 
