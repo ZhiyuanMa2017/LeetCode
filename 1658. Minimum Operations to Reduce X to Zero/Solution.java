@@ -14,7 +14,7 @@ class Solution {
             return -1;
         }
         int sum = 0;
-        HashMap<Integer, Integer> mp= new HashMap<>();
+        HashMap<Integer, Integer> mp = new HashMap<>();
         mp.put(0, -1);
         int res = -1;
         for (int i = 0; i < nums.length; i++) {
