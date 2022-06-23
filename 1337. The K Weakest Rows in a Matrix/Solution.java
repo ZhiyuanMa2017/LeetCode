@@ -6,16 +6,13 @@ class Solution {
         for (int i = 0; i < mat.length; i++) {
             rowCount[i] = cal(mat[i]);
         }
-        PriorityQueue<Integer> h =
-                new PriorityQueue<>((a, b) -> rowCount[a] == rowCount[b] ? b - a : rowCount[b] - rowCount[a]);
+        PriorityQueue<Integer> h = new PriorityQueue<>((a, b) -> rowCount[a] == rowCount[b] ? b - a : rowCount[b] - rowCount[a]);
         for (int i = 0; i < mat.length; i++) {
             h.offer(i);
             if (h.size() > k) {
                 h.poll();
             }
         }
-
-
         int[] res = new int[k];
         for (int i = k - 1; i >= 0; i--) {
             res[i] = h.poll();
