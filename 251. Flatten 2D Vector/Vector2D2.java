@@ -1,28 +1,31 @@
 class Vector2D {
-
-    int[][] v;
+    int[][] vector;
     int i;
     int j;
 
     public Vector2D(int[][] vec) {
-        v = vec;
+        vector = vec;
         i = 0;
         j = 0;
     }
 
     public int next() {
-        if (hasNext()) {
-            return v[i][j++];
-        }
-        return -1;
+        move();
+        int val = vector[i][j];
+        j++;
+        return val;
     }
 
     public boolean hasNext() {
-        while (i < v.length && j == v[i].length) {
+        move();
+        return i < vector.length;
+    }
+
+    private void move() {
+        while (i < vector.length && j == vector[i].length) {
             j = 0;
             i++;
         }
-        return i < v.length;
     }
 }
 
