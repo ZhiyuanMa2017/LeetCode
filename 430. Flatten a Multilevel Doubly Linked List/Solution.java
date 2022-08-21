@@ -8,26 +8,20 @@ class Solution {
             if (cur.child == null) {
                 cur = cur.next;
             } else {
-                Node curChild = cur.child;
-                while (curChild.next != null) {
-                    curChild = curChild.next;
+                Node tail = cur.child;
+                while (tail.next != null) {
+                    tail = tail.next;
                 }
-                curChild.next = cur.next;
+                tail.next = cur.next;
                 if (cur.next != null) {
-                    cur.next.prev = curChild;
+                    cur.next.prev = tail;
                 }
                 cur.next = cur.child;
                 cur.child.prev = cur;
                 cur.child = null;
+                cur = cur.next;
             }
         }
         return head;
-    }
-
-    class Node {
-        int val;
-        Node prev;
-        Node next;
-        Node child;
     }
 }
