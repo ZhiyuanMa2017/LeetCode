@@ -6,11 +6,9 @@ class Solution {
         List<Double> res = new ArrayList<>();
         List<Integer> counter = new ArrayList<>();
         dfs(0, root, res, counter);
-
         for (int i = 0; i < res.size(); i++) {
             res.set(i, res.get(i) / counter.get(i));
         }
-
         return res;
     }
 
@@ -22,32 +20,9 @@ class Solution {
             res.add(0.0);
             counter.add(0);
         }
-
         res.set(level, res.get(level) + node.val);
         counter.set(level, counter.get(level) + 1);
-
         dfs(level + 1, node.left, res, counter);
         dfs(level + 1, node.right, res, counter);
-
-
-    }
-}
-
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode() {
-    }
-
-    TreeNode(int val) {
-        this.val = val;
-    }
-
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
     }
 }
