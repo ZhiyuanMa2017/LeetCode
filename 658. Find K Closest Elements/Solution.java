@@ -1,19 +1,23 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 class Solution {
     public List<Integer> findClosestElements(int[] arr, int k, int x) {
-        int left = 0;
-        int right = arr.length - k;
-        while (left < right) {
-            int mid = left + (right - left) / 2;
-            if (x - arr[mid] > arr[mid + k] - x) {
-                left = mid + 1;
+        int startLow = 0;
+        int startHigh = arr.length - k;
+        while (startLow < startHigh) {
+            int start = startLow + (startHigh - startLow) / 2;
+            int end = start + k;
+            if (x - arr[start] > arr[end] - x) {
+                startLow = start + 1;
             } else {
-                right = mid;
+                startHigh = start;
             }
         }
-        return Arrays.stream(arr, left, left + k).boxed().collect(Collectors.toList());
+        List<Integer> res = new ArrayList<>();
+        for (int i = startLow; i < startLow + k; i++) {
+            res.add(arr[i]);
+        }
+        return res;
     }
 }
