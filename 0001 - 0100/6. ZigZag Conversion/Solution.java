@@ -7,19 +7,21 @@ class Solution {
         for (int i = 0; i < numRows; i++) {
             stringBuilders[i] = new StringBuilder();
         }
-        int rowId = 0;
-        int upOrDown = -1;
-        for (char c : s.toCharArray()) {
-            stringBuilders[rowId].append(c);
-            if (rowId == 0 || rowId == numRows - 1) {
-                upOrDown = 0 - upOrDown;
+        int row = 0;
+        int direction = 1;
+        for (int i = 0; i < s.length(); i++) {
+            if (row == 0) {
+                direction = 1;
+            } else if (row == numRows - 1) {
+                direction = -1;
             }
-            rowId += upOrDown;
+            stringBuilders[row].append(s.charAt(i));
+            row += direction;
         }
-        StringBuilder stringBuilder = new StringBuilder();
-        for (StringBuilder builder : stringBuilders) {
-            stringBuilder.append(builder);
+        StringBuilder res = new StringBuilder();
+        for (int i = 0; i < numRows; i++) {
+            res.append(stringBuilders[i]);
         }
-        return stringBuilder.toString();
+        return res.toString();
     }
 }
