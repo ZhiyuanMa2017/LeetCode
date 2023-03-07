@@ -17,6 +17,9 @@ class Solution {
                 return -1;
             }
         }
+        if (nums[0] == 1) {
+            return 0;
+        }
         Map<Integer, int[]> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
             int num = nums[i];
@@ -54,7 +57,7 @@ class Solution {
             second = Math.max(second, list.get(i + 1)[1]);
             i++;
         }
-        if (i < list.size() - 1) {
+        if (second < n - 1) {
             return second;
         }
         return -1;
