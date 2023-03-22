@@ -5,20 +5,21 @@ class Solution {
 
     public int beautifulSubsets(int[] nums, int k) {
         Arrays.sort(nums);
-        boolean[] visited = new boolean[1010];
+        int[] visited = new int[1010];
         dfs(nums, 0, k, visited);
         return res - 1;
     }
 
-    private void dfs(int[] nums, int index, int k, boolean[] visited) {
+    private void dfs(int[] nums, int index, int k, int[] visited) {
         if (index == nums.length) {
             res++;
             return;
         }
-        if (nums[index] < k || !visited[nums[index] - k]) {
-            visited[nums[index]] = true;
+        int res = 0;
+        if (nums[index] < k || visited[nums[index] - k] == 0) {
+            visited[nums[index]]++;
             dfs(nums, index + 1, k, visited);
-            visited[nums[index]] = false;
+            visited[nums[index]]--;
         }
         dfs(nums, index + 1, k, visited);
     }
