@@ -1,47 +1,55 @@
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 class Solution {
     public int minimumVisitedCells(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
-        boolean[][] visited = new boolean[m][n];
-        Queue<int[]> queue = new LinkedList<>();
-        queue.offer(new int[]{0, 0});
-        visited[0][0] = true;
-        int dis = 1;
-        // brute force BFS + early termination
-        // passed but should get TLE
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                int[] cur = queue.poll();
-                int x = cur[0];
-                int y = cur[1];
-                if (x == m - 1 && y == n - 1) {
-                    return dis;
+        int[][] dis = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            Arrays.fill(dis[i], (int) 1e6);
+        }
+        dis[0][0] = 1;
+        PriorityQueue<int[]>[] row = new PriorityQueue[m];
+        PriorityQueue<int[]>[] col = new PriorityQueue[n];
+        Comparator<int[]> comparator = new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] - o2[0];
+            }
+        };
+        for (int i = 0; i < m; i++) {
+            row[i] = new PriorityQueue<>(comparator);
+        }
+        for (int j = 0; j < n; j++) {
+            col[j] = new PriorityQueue<>(comparator);
+        }
+        // O(mn * (logm + logn))
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                while (!row[i].isEmpty() && row[i].peek()[1] + grid[i][row[i].peek()[1]] < j) {
+                    row[i].poll();
                 }
-                if (x == m - 1 && y + grid[x][y] >= n - 1) {
-                    return dis + 1;
+                if (!row[i].isEmpty()) {
+                    dis[i][j] = Math.min(dis[i][j], dis[i][row[i].peek()[1]] + 1);
                 }
-                if (y == n - 1 && x + grid[x][y] >= m - 1) {
-                    return dis + 1;
+                while (!col[j].isEmpty() && col[j].peek()[1] + grid[col[j].peek()[1]][j] < i) {
+                    col[j].poll();
                 }
-                for (int nx = x + 1; nx <= Math.min(m - 1, grid[x][y] + x); nx++) {
-                    if (!visited[nx][y]) {
-                        queue.offer(new int[]{nx, y});
-                        visited[nx][y] = true;
-                    }
+                if (!col[j].isEmpty()) {
+                    dis[i][j] = Math.min(dis[i][j], dis[col[j].peek()[1]][j] + 1);
                 }
-                for (int ny = y + 1; ny <= Math.min(n - 1, y + grid[x][y]); ny++) {
-                    if (!visited[x][ny]) {
-                        queue.offer(new int[]{x, ny});
-                        visited[x][ny] = true;
-                    }
+                if (dis[i][j] < 1e6) {
+                    row[i].offer(new int[]{dis[i][j], j});
+                    col[j].offer(new int[]{dis[i][j], i});
                 }
             }
-            dis++;
         }
-        return -1;
+        if (dis[m - 1][n - 1] >= 1e6) {
+            return -1;
+        } else {
+            return dis[m - 1][n - 1];
+        }
     }
 }

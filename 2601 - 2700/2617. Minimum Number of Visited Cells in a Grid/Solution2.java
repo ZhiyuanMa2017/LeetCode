@@ -1,41 +1,57 @@
-import java.util.LinkedList;
+import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Queue;
+import java.util.TreeSet;
 
 class Solution {
     public int minimumVisitedCells(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
-        boolean[][] visited = new boolean[m][n];
-        Queue<int[]> queue = new LinkedList<>();
-        queue.offer(new int[]{0, 0});
-        visited[0][0] = true;
-        int dis = 1;
-        // brute force BFS from large to small
-        // passed but should get TLE
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                int[] cur = queue.poll();
-                int x = cur[0];
-                int y = cur[1];
-                if (x == m - 1 && y == n - 1) {
-                    return dis;
-                }
-                for (int nx = Math.min(m - 1, grid[x][y] + x); nx >= x + 1; nx--) {
-                    if (!visited[nx][y]) {
-                        queue.offer(new int[]{nx, y});
-                        visited[nx][y] = true;
-                    }
-                }
-                for (int ny = Math.min(n - 1, y + grid[x][y]); ny >= y + 1; ny--) {
-                    if (!visited[x][ny]) {
-                        queue.offer(new int[]{x, ny});
-                        visited[x][ny] = true;
-                    }
-                }
-            }
-            dis++;
+        TreeSet<Integer>[] row = new TreeSet[m];
+        TreeSet<Integer>[] col = new TreeSet[n];
+        for (int i = 0; i < m; i++) {
+            row[i] = new TreeSet<>();
         }
-        return -1;
+        for (int j = 0; j < n; j++) {
+            col[j] = new TreeSet<>();
+        }
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                row[i].add(j);
+                col[j].add(i);
+            }
+        }
+        int[][] dis = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            Arrays.fill(dis[i], -1);
+        }
+        Queue<int[]> queue = new ArrayDeque<>();
+        queue.offer(new int[]{0, 0});
+        dis[0][0] = 1;
+        row[0].remove(0);
+        col[0].remove(0);
+        // so many log: higher, remove
+        while (!queue.isEmpty()) {
+            int[] cur = queue.poll();
+            int x = cur[0];
+            int y = cur[1];
+            Integer ny = row[x].higher(y);
+            while (ny != null && ny <= y + grid[x][y]) {
+                queue.offer(new int[]{x, ny});
+                dis[x][ny] = dis[x][y] + 1;
+                col[ny].remove(x);
+                row[x].remove(ny);
+                ny = row[x].higher(y);
+            }
+            Integer nx = col[y].higher(x);
+            while (nx != null && nx <= x + grid[x][y]) {
+                queue.offer(new int[]{nx, y});
+                dis[nx][y] = dis[x][y] + 1;
+                row[nx].remove(y);
+                col[y].remove(nx);
+                nx = col[y].higher(x);
+            }
+        }
+        return dis[m - 1][n - 1];
     }
 }
