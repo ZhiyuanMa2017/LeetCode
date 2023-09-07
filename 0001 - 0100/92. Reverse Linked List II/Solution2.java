@@ -1,27 +1,29 @@
-class Solution2 {
+class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
+        left--;
+        right--;
         ListNode sentinel = new ListNode(-1);
         sentinel.next = head;
         ListNode cur = head;
         ListNode pre = sentinel;
-        while (left > 1) {
+        int i = 0;
+        while (i < left) {
             cur = cur.next;
             pre = pre.next;
-            left--;
-            right--;
+            i++;
         }
-        ListNode tail = cur;
-        ListNode reverseHead = null;
+        ListNode last = cur;
+        ListNode rHead = null;
         ListNode next;
-        while (right > 0) {
+        while (i <= right) {
             next = cur.next;
-            cur.next = reverseHead;
-            reverseHead = cur;
+            cur.next = rHead;
+            rHead = cur;
             cur = next;
-            right--;
+            i++;
         }
-        tail.next = cur;
-        pre.next = reverseHead;
+        last.next = cur;
+        pre.next = rHead;
         return sentinel.next;
     }
 }
