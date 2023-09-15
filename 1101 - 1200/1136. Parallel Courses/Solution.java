@@ -1,5 +1,5 @@
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
@@ -16,8 +16,8 @@ class Solution {
             inDegree[next]++;
             graph.get(prev).add(next);
         }
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 1; i < inDegree.length; i++) {
+        Queue<Integer> queue = new ArrayDeque<>();
+        for (int i = 1; i <= n; i++) {
             if (inDegree[i] == 0) {
                 queue.offer(i);
             }
