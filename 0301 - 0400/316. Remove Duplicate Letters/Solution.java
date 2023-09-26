@@ -10,7 +10,6 @@ class Solution {
         boolean[] used = new boolean[26];
         Deque<Character> stack = new ArrayDeque<>();
         for (int i = 0; i < s.length(); i++) {
-
             char c = s.charAt(i);
             count[c - 'a']--;
             if (used[c - 'a']) {
