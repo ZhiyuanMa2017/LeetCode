@@ -1,26 +1,27 @@
 class Solution {
-    public static String decodeAtIndex(String S, int K) {
-        long slength = 0;
-        int i;
-        for (i = 0; slength < K; i++) {
-            Character ii = S.charAt(i);
-            if (Character.isDigit(S.charAt(i))) {
-                slength *= Character.getNumericValue(S.charAt(i));
+    public String decodeAtIndex(String s, int k) {
+        long len = 0;
+        int index = 0;
+        while (index < s.length() && len < k) {
+            if (Character.isDigit(s.charAt(index))) {
+                len *= s.charAt(index) - '0';
             } else {
-                slength += 1;
+                len++;
             }
+            index++;
         }
-        i--;
+        index--;
         while (true) {
-            if (Character.isDigit(S.charAt(i))) {
-                slength /= Character.getNumericValue(S.charAt(i));
-                K %= slength;
-            } else if (K % slength == 0) {
-                return String.valueOf(S.charAt(i));
+            if (Character.isDigit(s.charAt(index))) {
+                int num = s.charAt(index) - '0';
+                len /= num;
+                k %= len;
+            } else if (k % len == 0) {
+                return String.valueOf(s.charAt(index));
             } else {
-                slength--;
+                len--;
             }
-            i--;
+            index--;
         }
     }
 }
