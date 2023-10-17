@@ -41,10 +41,9 @@ class Solution {
             return i;
         }
 
-        void union(int i, int j) {
-            int p = find(i);
-            int q = find(j);
-            parent[q] = p;
+        void union(int p, int child) {
+            int pp = find(p);
+            parent[child] = pp;
             count--;
         }
     }
