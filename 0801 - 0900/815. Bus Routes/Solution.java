@@ -1,6 +1,8 @@
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
@@ -10,39 +12,43 @@ class Solution {
         if (source == target) {
             return 0;
         }
-        Map<Integer, Set<Integer>> stopToBus = new HashMap();
+        Map<Integer, List<Integer>> stopToBus = new HashMap<>();
         for (int i = 0; i < routes.length; i++) {
             for (int j : routes[i]) {
                 if (!stopToBus.containsKey(j)) {
-                    stopToBus.put(j, new HashSet<>());
+                    stopToBus.put(j, new ArrayList<>());
                 }
                 stopToBus.get(j).add(i);
             }
         }
-        Queue<int[]> queue = new LinkedList<>();
+        Queue<Integer> queue = new ArrayDeque<>();
         boolean[] busSeen = new boolean[routes.length];
         Set<Integer> stopSeen = new HashSet<>();
-        queue.offer(new int[]{source, 0});
+        queue.offer(source);
         stopSeen.add(source);
+        int step = 0;
         while (!queue.isEmpty()) {
-            int[] cur = queue.poll();
-            int stop = cur[0];
-            int count = cur[1];
-            if (stop == target) {
-                return count;
-            }
-            for (Integer bus : stopToBus.get(stop)) {
-                if (busSeen[bus]) {
-                    continue;
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int curStop = queue.poll();
+                if (curStop == target) {
+                    return step;
                 }
-                for (int newStop : routes[bus]) {
-                    if (!stopSeen.contains(newStop)) {
-                        stopSeen.add(newStop);
-                        queue.offer(new int[]{newStop, count + 1});
+                for (Integer nextBus : stopToBus.get(curStop)) {
+                    if (busSeen[nextBus]) {
+                        continue;
                     }
+                    for (int nextStop : routes[nextBus]) {
+                        if (stopSeen.contains(nextStop)) {
+                            continue;
+                        }
+                        queue.offer(nextStop);
+                        stopSeen.add(nextStop);
+                    }
+                    busSeen[nextBus] = true;
                 }
-                busSeen[bus] = true;
             }
+            step++;
         }
         return -1;
     }
