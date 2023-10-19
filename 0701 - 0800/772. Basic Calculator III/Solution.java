@@ -3,31 +3,28 @@ import java.util.Deque;
 
 class Solution {
     public int calculate(String s) {
-        StringBuilder expression = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
-            if (!Character.isWhitespace(s.charAt(i))) {
-                expression.append(s.charAt(i));
-            }
-        }
-        StringBuilder sb = new StringBuilder();
         Deque<StringBuilder> stack = new ArrayDeque<>();
-        for (int i = 0; i < expression.length(); i++) {
-            if (expression.charAt(i) == '(') {
-                stack.push(sb);
-                sb = new StringBuilder();
-            } else if (expression.charAt(i) == ')') {
-                int cur = cal(sb);
+        StringBuilder cur = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (Character.isWhitespace(c)) {
+                continue;
+            } else if (c == '(') {
+                stack.push(cur);
+                cur = new StringBuilder();
+            } else if (c == ')') {
+                int r = cal(cur);
                 StringBuilder prev = stack.pop();
-                prev.append(cur);
-                sb = prev;
+                prev.append(r);
+                cur = prev;
             } else {
-                sb.append(expression.charAt(i));
+                cur.append(c);
             }
         }
-        return cal(sb);
+        return cal(cur);
     }
 
-    private int cal(StringBuilder sb) {
+    public static int cal(StringBuilder sb) {
         int res = 0;
         int prev = 0;
         int cur = 0;
@@ -41,7 +38,6 @@ class Solution {
                 } else {
                     cur = cur * 10 + (c - '0');
                 }
-
             }
             if (!Character.isDigit(c) || i == sb.length() - 1) {
                 if (op == '+') {
