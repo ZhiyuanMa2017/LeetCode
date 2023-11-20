@@ -1,48 +1,45 @@
 class Solution {
-    boolean flag;
-
     public String getDirections(TreeNode root, int startValue, int destValue) {
         StringBuilder sb1 = new StringBuilder();
         StringBuilder sb2 = new StringBuilder();
-
         dfs(root, startValue, sb1);
-        flag = false;
         dfs(root, destValue, sb2);
-
-        while (sb1.length() > 0 && sb2.length() > 0 && sb1.charAt(0) == sb2.charAt(0)) {
-            sb1.deleteCharAt(0);
-            sb2.deleteCharAt(0);
+        int index = 0;
+        while (index < sb1.length() && index < sb2.length()) {
+            if (sb1.charAt(index) == sb2.charAt(index)) {
+                index++;
+            } else {
+                break;
+            }
         }
-
-        String temp = sb1.toString();
-        if (sb1.length() > 0) {
-            temp = sb1.toString().replace("L", "U");
-            temp = temp.replace("R", "U");
+        StringBuilder res = new StringBuilder();
+        for (int j = sb1.length() - 1; j >= index; j--) {
+            res.append("U");
         }
-
-        return temp + sb2.toString();
+        res.append(sb2.substring(index));
+        return res.toString();
     }
 
-    public void dfs(TreeNode node, int target, StringBuilder path) {
-        if (node.val == target) {
-            flag = true;
-            return;
+    private boolean dfs(TreeNode root, int target, StringBuilder sb) {
+        if (root.val == target) {
+            return true;
         }
-        if (node.left != null) {
-            path.append('L');
-            dfs(node.left, target, path);
-            if (flag) {
-                return;
+        if (root.left != null) {
+            sb.append("L");
+            if (dfs(root.left, target, sb)) {
+                return true;
+            } else {
+                sb.setLength(sb.length() - 1);
             }
-            path.deleteCharAt(path.length() - 1);
         }
-        if (node.right != null) {
-            path.append('R');
-            dfs(node.right, target, path);
-            if (flag) {
-                return;
+        if (root.right != null) {
+            sb.append("R");
+            if (dfs(root.right, target, sb)) {
+                return true;
+            } else {
+                sb.setLength(sb.length() - 1);
             }
-            path.deleteCharAt(path.length() - 1);
         }
+        return false;
     }
 }
