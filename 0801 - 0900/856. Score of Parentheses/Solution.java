@@ -1,15 +1,15 @@
 class Solution {
-    public int scoreOfParentheses(String S) {
-        int layer = 0;
+    public int scoreOfParentheses(String s) {
         int res = 0;
-        for (int i = 0; i < S.toCharArray().length; i++) {
-            if (S.charAt(i) == '(') {
-                layer++;
+        int depth = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                depth++;
             } else {
-                layer--;
+                depth--;
             }
-            if (S.charAt(i) == ')' && S.charAt(i - 1) == '(') {
-                res += Math.pow(2, layer);
+            if (s.charAt(i) == ')' && s.charAt(i - 1) == '(') {
+                res += 1 << depth;
             }
         }
         return res;
