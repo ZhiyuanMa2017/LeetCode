@@ -9,23 +9,28 @@ import java.util.Set;
 
 class Solution {
     public int numBusesToDestination(int[][] routes, int source, int target) {
-        if (source == target) {
-            return 0;
-        }
+        // stop to bus
+        // bfs:
+        // stop -> all bus has this top -> for every bus -> go to next stop
+        // visited stop and visited bus to avoid duplicated visit
+        // number of bus : 1 ~ 500
+        // number of stop: 10 ^ 5
+        int n = routes.length; //1 ~ 500
         Map<Integer, List<Integer>> stopToBus = new HashMap<>();
         for (int i = 0; i < routes.length; i++) {
-            for (int j : routes[i]) {
-                if (!stopToBus.containsKey(j)) {
-                    stopToBus.put(j, new ArrayList<>());
+            int bus = i;
+            for (int stop : routes[bus]) {
+                if (!stopToBus.containsKey(stop)) {
+                    stopToBus.put(stop, new ArrayList<>());
                 }
-                stopToBus.get(j).add(i);
+                stopToBus.get(stop).add(bus);
             }
         }
         Queue<Integer> queue = new ArrayDeque<>();
-        boolean[] busSeen = new boolean[routes.length];
-        Set<Integer> stopSeen = new HashSet<>();
+        boolean[] busVisited = new boolean[n];
+        Set<Integer> stopVisited = new HashSet<>();
         queue.offer(source);
-        stopSeen.add(source);
+        stopVisited.add(source);
         int step = 0;
         while (!queue.isEmpty()) {
             int size = queue.size();
@@ -34,18 +39,21 @@ class Solution {
                 if (curStop == target) {
                     return step;
                 }
+                if (!stopToBus.containsKey(curStop)) {
+                    continue;
+                }
                 for (Integer nextBus : stopToBus.get(curStop)) {
-                    if (busSeen[nextBus]) {
+                    if (busVisited[nextBus]) {
                         continue;
                     }
                     for (int nextStop : routes[nextBus]) {
-                        if (stopSeen.contains(nextStop)) {
+                        if (stopVisited.contains(nextStop)) {
                             continue;
                         }
                         queue.offer(nextStop);
-                        stopSeen.add(nextStop);
+                        stopVisited.add(nextStop);
                     }
-                    busSeen[nextBus] = true;
+                    busVisited[nextBus] = true;
                 }
             }
             step++;
