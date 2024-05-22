@@ -6,38 +6,38 @@ import java.util.Set;
 class Solution {
     public boolean wordPatternMatch(String pattern, String s) {
         Map<Character, String> map = new HashMap<>();
-        Set<String> stringSet = new HashSet<>();
-
-        return backtrack(pattern, 0, s, 0, map, stringSet);
+        Set<String> set = new HashSet<>();
+        return backtrack(pattern, 0, s, 0, map, set);
     }
 
-    private boolean backtrack(String pattern, int i, String s, int j,
-                              Map<Character, String> map, Set<String> stringSet) {
-        if (i == pattern.length() && j == s.length()) {
+    private boolean backtrack(String pattern, int index, String s, int index2, Map<Character, String> map, Set<String> set) {
+        if (index == pattern.length() && index2 == s.length()) {
             return true;
-        }
-        if (i == pattern.length() || j == s.length()) {
+        } else if (index == pattern.length() || index2 == s.length()) {
             return false;
         }
-        if (map.containsKey(pattern.charAt(i))) {
-            String word = map.get(pattern.charAt(i));
-            if (!s.startsWith(word, j)) {
+        char c = pattern.charAt(index);
+        if (map.containsKey(c)) {
+            String sub = map.get(c);
+            if (!s.startsWith(sub, index2)) {
                 return false;
+            } else {
+                return backtrack(pattern, index + 1, s, index2 + sub.length(), map, set);
             }
-            return backtrack(pattern, i + 1, s, j + word.length(), map, stringSet);
-        }
-        for (int k = j; k < s.length(); k++) {
-            String nextWord = s.substring(j, k + 1);
-            if (stringSet.contains(nextWord)) {
-                continue;
+        } else {
+            for (int i = index2; i < s.length(); i++) {
+                String sub = s.substring(index2, i + 1);
+                if (set.contains(sub)) {
+                    continue;
+                }
+                map.put(c, sub);
+                set.add(sub);
+                if (backtrack(pattern, index + 1, s, i + 1, map, set)) {
+                    return true;
+                }
+                map.remove(c);
+                set.remove(sub);
             }
-            stringSet.add(nextWord);
-            map.put(pattern.charAt(i), nextWord);
-            if (backtrack(pattern, i + 1, s, j + nextWord.length(), map, stringSet)) {
-                return true;
-            }
-            stringSet.remove(nextWord);
-            map.remove(pattern.charAt(i));
         }
         return false;
     }
