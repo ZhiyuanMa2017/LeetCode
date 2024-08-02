@@ -1,37 +1,32 @@
 class Solution {
     public int minSwaps(int[] nums) {
-        int all = 0;
+        int n = nums.length;
+        int total = 0;
         for (int num : nums) {
             if (num == 1) {
-                all++;
+                total++;
             }
         }
-        int res = Integer.MAX_VALUE;
         int cur = 0;
-        for (int i = 0; i < all; i++) {
-            if (nums[i] == 1) {
+        int right = 0;
+        while (right < total) {
+            if (nums[right] == 1) {
                 cur++;
             }
+            right++;
         }
-        res = Math.min(res, all - cur);
-        if (res == 0) {
-            return 0;
-        }
-        for (int i = 1; i + all < nums.length * 2; i++) {
-            int l = i;
-            int r = i + all;
-            int left = (l - 1) % nums.length;
-            int right = (r - 1) % nums.length;
+        right = right % n;
+        int res = total - cur;
+        for (int left = 0; left < n; left++) {
             if (nums[left] == 1) {
-                cur -= 1;
+                cur--;
             }
             if (nums[right] == 1) {
-                cur += 1;
+                cur++;
             }
-            res = Math.min(res, all - cur);
+            res = Math.min(res, total - cur);
+            right = (right + 1) % n;
         }
-
         return res;
-
     }
 }
