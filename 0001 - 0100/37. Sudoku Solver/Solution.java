@@ -10,23 +10,18 @@ class Solution {
         if (r == 9) {
             return true;
         }
-        for (int i = r; i < 9; i++) {
-            for (int j = c; j < 9; j++) {
-                if (board[r][c] != '.') {
-                    return backtrack(board, i, j + 1);
-                }
-                for (char ch = '1'; ch <= '9'; ch++) {
-                    if (!isValid(board, i, j, ch)) {
-                        continue;
-                    }
-                    board[i][j] = ch;
-                    if (backtrack(board, i, j + 1)) {
-                        return true;
-                    }
-                    board[i][j] = '.';
-                }
-                return false;
+        if (board[r][c] != '.') {
+            return backtrack(board, r, c + 1);
+        }
+        for (char ch = '1'; ch <= '9'; ch++) {
+            if (!isValid(board, r, c, ch)) {
+                continue;
             }
+            board[r][c] = ch;
+            if (backtrack(board, r, c + 1)) {
+                return true;
+            }
+            board[r][c] = '.';
         }
         return false;
     }
@@ -39,8 +34,14 @@ class Solution {
             if (board[r][i] == ch) {
                 return false;
             }
-            if (board[(r / 3) * 3 + i / 3][(c / 3) * 3 + i % 3] == ch) {
-                return false;
+        }
+        int x = (r / 3) * 3;
+        int y = (c / 3) * 3;
+        for (int i = x; i < x + 3; i++) {
+            for (int j = y; j < y + 3; j++) {
+                if (board[i][j] == ch) {
+                    return false;
+                }
             }
         }
         return true;
