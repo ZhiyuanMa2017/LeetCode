@@ -9,10 +9,10 @@ class Solution2 {
         reverse(nums, pivot + 1);
     }
 
-
+    // 1,3,5,4,1
     private int findLast(int[] nums) {
         int index = nums.length - 1;
-        while (index > 0 && nums[index] <= nums[index - 1]) {
+        while (index > 0 && nums[index - 1] >= nums[index]) {
             index--;
         }
         return index;
