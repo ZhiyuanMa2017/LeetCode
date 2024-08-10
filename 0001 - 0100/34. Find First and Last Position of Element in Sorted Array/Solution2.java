@@ -1,4 +1,4 @@
-class Solution20220115 {
+class Solution2 {
     public int[] searchRange(int[] nums, int target) {
         if (nums.length == 0) {
             return new int[]{-1, -1};
@@ -26,10 +26,10 @@ class Solution20220115 {
         // find last
         while (l < h) {
             int mid = l + (h - l + 1) / 2;
-            if (nums[mid] > target) {
-                h = mid - 1;
-            } else {
+            if (nums[mid] <= target) {
                 l = mid;
+            } else {
+                h = mid - 1;
             }
         }
         res[1] = l;
