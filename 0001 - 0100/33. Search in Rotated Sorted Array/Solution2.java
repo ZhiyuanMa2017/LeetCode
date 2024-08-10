@@ -1,27 +1,30 @@
-class Solution2 {
+class Solution {
     public int search(int[] nums, int target) {
         int n = nums.length;
         int l = 0;
-        int h = n - 1;
-        while (l < h) {
-            int mid = l + (h - l) / 2;
-            if (nums[mid] == target) {
-                return mid;
-            }
-            if (nums[l] <= nums[mid]) {
-                if (nums[l] <= target && target < nums[mid]) {
-                    h = mid;
-                } else {
-                    l = mid + 1;
-                }
+        int r = n - 1;
+        while (l < r) {
+            int mid = l + (r - l + 1) / 2;
+            if (nums[mid] >= nums[0]) {
+                l = mid;
             } else {
-                if (nums[mid] < target && target <= nums[h]) {
-                    l = mid + 1;
-                } else {
-                    h = mid;
-                }
+                r = mid - 1;
             }
         }
-        return nums[l] == target ? l : -1;
+        if (target >= nums[0]) {
+            l = 0;
+        } else {
+            l = l + 1;
+            r = n - 1;
+        }
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+            if (nums[mid] >= target) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return nums[r] == target ? r : -1;
     }
 }
