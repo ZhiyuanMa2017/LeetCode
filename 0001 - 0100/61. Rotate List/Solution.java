@@ -1,49 +1,30 @@
 class Solution {
-    public static ListNode rotateRight(ListNode head, int k) {
-        if (head == null || k == 0) {
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || k == 0 || head.next == null) {
             return head;
         }
+        int len = 0;
         ListNode cur = head;
-        ListNode tail = null;
-        int cnt = 0;
+        ListNode tail = new ListNode(-1);
+        tail.next = cur;
         while (cur != null) {
-            cnt++;
-            if (cur.next == null) {
-                tail = cur;
-            }
+            len++;
             cur = cur.next;
+            tail = tail.next;
         }
-        k = k % cnt;
+        k = k % len;
         if (k == 0) {
             return head;
         }
-        int index = cnt - k;
-        int count = 1;
-        ListNode curr = head;
-        while (count != index) {
-            count++;
-            curr = curr.next;
+        cur = head;
+        k = len - k;
+        while (k > 1) {
+            k--;
+            cur = cur.next;
         }
-        ListNode newHead = curr.next;
-        curr.next = null;
+        ListNode returnNode = cur.next;
+        cur.next = null;
         tail.next = head;
-        return newHead;
-    }
-
-    public static class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode() {
-        }
-
-        ListNode(int val) {
-            this.val = val;
-        }
-
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
-        }
+        return returnNode;
     }
 }
