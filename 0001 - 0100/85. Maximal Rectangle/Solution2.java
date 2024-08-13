@@ -1,37 +1,49 @@
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
 
-class Solution {
-
+class Solution2 {
     public int maximalRectangle(char[][] matrix) {
-        int[] heights = new int[matrix[0].length];
+        int m = matrix.length;
+        int n = matrix[0].length;
         int res = 0;
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++) {
+        int[] heights = new int[n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 heights[j] = matrix[i][j] == '1' ? heights[j] + 1 : 0;
-                res = Math.max(res, largestRectangleArea(heights));
             }
+            res = Math.max(res, largestRectangleArea(heights));
         }
         return res;
     }
 
     public int largestRectangleArea(int[] heights) {
-        int res = 0;
-        Deque<Integer> stack = new ArrayDeque<>();
-        // increasing stack
-        stack.push(-1);
-        for (int i = 0; i < heights.length; i++) {
-            while (stack.peek() != -1 && heights[stack.peek()] >= heights[i]) {
-                int h = heights[stack.pop()];
-                int w = i - 1 - stack.peek();
-                res = Math.max(res, h * w);
+        int n = heights.length;
+        int[] left = new int[n];
+        Arrays.fill(left, -1);
+        int[] right = new int[n];
+        Arrays.fill(right, n);
+        Deque<Integer> deque = new ArrayDeque<Integer>();
+        for (int i = 0; i < n; i++) {
+            while (!deque.isEmpty() && heights[deque.peek()] > heights[i]) {
+                right[deque.poll()] = i;
             }
-            stack.push(i);
+            deque.push(i);
         }
-        while (stack.peek() != -1) {
-            int h = heights[stack.pop()];
-            int w = heights.length - 1 - stack.peek();
-            res = Math.max(res, h * w);
+        deque = new ArrayDeque<>();
+        for (int i = n - 1; i >= 0; i--) {
+            while (!deque.isEmpty() && heights[deque.peek()] > heights[i]) {
+                left[deque.poll()] = i;
+            }
+            deque.push(i);
+        }
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            int h = heights[i];
+            int l = left[i];
+            int r = right[i];
+            int w = r - l - 1;
+            res = Math.max(res, w * h);
         }
         return res;
     }
