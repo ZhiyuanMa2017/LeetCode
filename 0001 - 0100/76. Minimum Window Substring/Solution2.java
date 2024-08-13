@@ -1,43 +1,59 @@
 class Solution2 {
     public String minWindow(String s, String t) {
-        int n = s.length();
-        int l = 0;
-        int r = 0;
-        int minLeft = 0;
-        int res = s.length() + 1;
-        int[] counter = new int[128];
-        for (int i = 0; i < t.length(); i++) {
-            counter[t.charAt(i)]++;
+        int m = s.length();
+        int n = t.length();
+        if (m < n) {
+            return "";
         }
-        int total = t.length();
-        while (r < n) {
-            char c = s.charAt(r);
-            if (counter[c] > 0) {
-                total--;
-            }
-            counter[c]--;
-            if (total == 0) {
-                while (l < r && counter[s.charAt(l)] < 0) {
-                    counter[s.charAt(l)]++;
-                    l++;
-                }
-                if (r - l + 1 < res) {
-                    minLeft = l;
-                    res = r - l + 1;
-                }
-                counter[s.charAt(l)]++;
-                l++;
+        int[] tt = new int[60];
+        int[] window = new int[60];
+        int total = 0;
+        for (int i = 0; i < n; i++) {
+            char c = t.charAt(i);
+            tt[index(c)]++;
+            if (tt[index(c)] == 1) {
                 total++;
             }
-            r++;
         }
-        return res == s.length() + 1 ? "" : s.substring(minLeft, minLeft + res);
+        int len = m + 1;
+        int start = 0;
+        int left = 0;
+        int right = 0;
+        while (right < m) {
+            char c = s.charAt(right);
+            window[index(c)]++;
+            if (window[index(c)] == tt[index(c)]) {
+                total--;
+            }
+            while (left < right) {
+                char cc = s.charAt(left);
+                if (window[index(cc)] > tt[index(cc)]) {
+                    left++;
+                    window[index(cc)]--;
+                } else {
+                    break;
+                }
+            }
+            if (total == 0) {
+                if (len > right - left + 1) {
+                    len = right - left + 1;
+                    start = left;
+                }
+            }
+            right++;
+        }
+        if (len == m + 1) {
+            return "";
+        } else {
+            return s.substring(start, start + len);
+        }
     }
 
-    public static void main(String[] args) {
-        Solution s = new Solution();
-        System.out.println(s.minWindow("ADOBECODEBANC", "ABC"));
-        System.out.println('A' - 'a');
-        System.out.println(Integer.valueOf('A'));
+    private int index(char c) {
+        if (c >= 'a' && c <= 'z') {
+            return c - 'a';
+        } else {
+            return c - 'A' + 26;
+        }
     }
 }
