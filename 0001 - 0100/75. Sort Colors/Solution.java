@@ -11,13 +11,10 @@ class Solution {
             } else if (nums[i] == 2) {
                 swap(nums, i, r);
                 r--;
-
             } else {
                 i++;
             }
-
         }
-
     }
 
     public void swap(int[] nums, int i, int j) {
