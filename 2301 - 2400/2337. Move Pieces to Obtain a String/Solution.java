@@ -1,55 +1,34 @@
-import java.util.ArrayList;
-import java.util.List;
-
 class Solution {
     public boolean canChange(String start, String target) {
-        List<Node> s = new ArrayList<>();
-        List<Node> t = new ArrayList<>();
-        for (int i = 0; i < start.length(); i++) {
-            if (start.charAt(i) == 'L') {
-                s.add(new Node('L', i));
-            } else if (start.charAt(i) == 'R') {
-                s.add(new Node('R', i));
+        int n = start.length();
+        int i = 0;
+        for (int j = 0; j < n; j++) {
+            if (target.charAt(j) == '_') {
+                continue;
             }
-        }
-        for (int i = 0; i < target.length(); i++) {
-            if (target.charAt(i) == 'L') {
-                t.add(new Node('L', i));
-            } else if (target.charAt(i) == 'R') {
-                t.add(new Node('R', i));
+            while (i < n && start.charAt(i) == '_') {
+                i++;
             }
-        }
-        if (s.size() != t.size()) {
-            return false;
-        }
-        for (int i = 0; i < s.size(); i++) {
-            Node n1 = s.get(i);
-            Node n2 = t.get(i);
-            if (n1.c != n2.c) {
+            if (i >= n) {
                 return false;
             }
-            if (n1.c == 'L') {
-                if (n2.index > n1.index) {
-                    return false;
-                }
+            if (target.charAt(j) != start.charAt(i)) {
+                return false;
             }
-            if (n1.c == 'R') {
-                if (n1.index > n2.index) {
-                    return false;
-                }
+            if (target.charAt(j) == 'L' && i < j) {
+                return false;
             }
+            if (target.charAt(j) == 'R' && i > j) {
+                return false;
+            }
+            i++;
+        }
+        while (i < n) {
+            if (start.charAt(i) != '_') {
+                return false;
+            }
+            i++;
         }
         return true;
-    }
-
-    class Node {
-        char c;
-        int index;
-
-        Node(char c, int i) {
-            this.c = c;
-            index = i;
-        }
-
     }
 }
