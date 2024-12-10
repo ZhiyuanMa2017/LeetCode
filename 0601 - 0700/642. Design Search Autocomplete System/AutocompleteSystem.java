@@ -1,15 +1,19 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 
 class AutocompleteSystem {
     Trie root;
+    Trie cur;
+    Trie broken;
     String prefix;
 
     public AutocompleteSystem(String[] sentences, int[] times) {
         root = new Trie();
+        cur = root;
+        broken = new Trie();
         prefix = "";
         for (int i = 0; i < sentences.length; i++) {
             add(sentences[i], times[i]);
@@ -20,27 +24,23 @@ class AutocompleteSystem {
         if (c == '#') {
             add(prefix, 1);
             prefix = "";
+            cur = root;
             return new ArrayList<>();
         } else {
             prefix += c;
-            Trie cur = root;
-            for (int i = 0; i < prefix.length(); i++) {
-                int index = prefix.charAt(i) == ' ' ? 26 : prefix.charAt(i) - 'a';
-                if (cur.children[index] == null) {
-                    return new ArrayList<>();
-                }
-                cur = cur.children[index];
+            int index = c == ' ' ? 26 : c - 'a';
+            if (cur.children[index] == null) {
+                cur = broken;
+                return new ArrayList<>();
             }
+            cur = cur.children[index];
             Map<String, Integer> temp = cur.count;
-            PriorityQueue<Map.Entry<String, Integer>> pq = new PriorityQueue<>((a, b) -> a.getValue().equals(b.getValue()) ? a.getKey().compareTo(b.getKey()) : b.getValue() - a.getValue());
-            for (Map.Entry<String, Integer> entry : temp.entrySet()) {
-                pq.add(entry);
-            }
+            List<String> list = new ArrayList<>(temp.keySet());
+            Collections.sort(list, (a, b) -> (temp.get(a).equals(temp.get(b)) ? a.compareTo(b) : temp.get(b) - temp.get(a)));
             List<String> res = new ArrayList<>();
             int count = 3;
-            while (!pq.isEmpty() && count > 0) {
-                res.add(pq.poll().getKey());
-                count--;
+            for (int i = 0; i < Math.min(3, list.size()); i++) {
+                res.add(list.get(i));
             }
             return res;
         }
@@ -67,11 +67,4 @@ class AutocompleteSystem {
             count = new HashMap<>();
         }
     }
-
 }
-
-/**
- * Your AutocompleteSystem object will be instantiated and called as such:
- * AutocompleteSystem obj = new AutocompleteSystem(sentences, times);
- * List<String> param_1 = obj.input(c);
- */
